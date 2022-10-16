@@ -1,17 +1,17 @@
-package com.softserve.restapiexample.controller;
+package com.softserve.restapiexample.app.controller.controller;
 
-import com.softserve.restapiexample.dto.ArticleDTO;
-import com.softserve.restapiexample.exception.ArticleNotFoundException;
-import com.softserve.restapiexample.exception.ErrorResponse;
-import com.softserve.restapiexample.model.Article;
-import com.softserve.restapiexample.services.ArticleService;
+import com.softserve.restapiexample.app.controller.dto.ArticleDTO;
+import com.softserve.restapiexample.app.controller.exception.ArticleNotFoundException;
+import com.softserve.restapiexample.app.controller.exception.ErrorResponse;
+import com.softserve.restapiexample.app.controller.model.Article;
+import com.softserve.restapiexample.app.controller.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/api/v1/article")
 public class ArticleController {
   @Autowired private ArticleService articleService;
 
@@ -31,7 +31,7 @@ public class ArticleController {
   }
 
   @PutMapping("/{id}")
-  public Article updateArticleById(@RequestBody Article article, @PathVariable long id) {
+  public Article updateArticleById(@PathVariable Article article, @RequestBody long id) {
     return articleService.updateArticleById(article, id);
   }
 

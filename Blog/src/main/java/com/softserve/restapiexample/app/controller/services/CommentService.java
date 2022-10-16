@@ -1,11 +1,11 @@
-package com.softserve.restapiexample.services;
+package com.softserve.restapiexample.app.controller.services;
 
-import com.softserve.restapiexample.dto.CommentDTO;
-import com.softserve.restapiexample.model.Comment;
+import com.softserve.restapiexample.app.controller.dto.CommentDTO;
+import com.softserve.restapiexample.app.controller.model.Comment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
+
 public interface CommentService {
     List<CommentDTO> findAllComments();
     void deleteCommentById(long id);

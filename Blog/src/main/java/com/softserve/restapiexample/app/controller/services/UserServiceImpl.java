@@ -1,17 +1,17 @@
-package com.softserve.restapiexample.services;
+package com.softserve.restapiexample.app.controller.services;
 
-import com.softserve.restapiexample.Mapper.Mapper;
-import com.softserve.restapiexample.dto.UserDTO;
-import com.softserve.restapiexample.exception.UserAlreadyExistException;
-import com.softserve.restapiexample.exception.UserNotFoundException;
-import com.softserve.restapiexample.model.User;
-import com.softserve.restapiexample.repository.UserRepository;
+import com.softserve.restapiexample.app.controller.dto.UserDTO;
+import com.softserve.restapiexample.app.controller.exception.UserAlreadyExistException;
+import com.softserve.restapiexample.app.controller.exception.UserNotFoundException;
+import com.softserve.restapiexample.app.controller.model.User;
+import com.softserve.restapiexample.app.controller.repository.UserRepository;
+import com.softserve.restapiexample.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class UserServiceImpl implements UserService {
   @Autowired private UserRepository userRepository;
 
@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService {
 
   public UserDTO getUserById(Long id) {
 
-    Optional<User> user = userRepository.findById(id);
+    UserDTO userDTO =
+        userRepository.findById(id).map(user -> mapper.mapUserToDTO(user)).orElse(null);
 
-    if (user.isPresent()) {
-      UserDTO userDTO = mapper.mapUserToDTO(user.get());
+    if (userDTO != null) {
       return userDTO;
     } else {
       throw new UserNotFoundException("NO USER PRESENT WITH ID =" + id);

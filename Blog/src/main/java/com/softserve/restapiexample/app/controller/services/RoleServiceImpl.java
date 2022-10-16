@@ -1,16 +1,16 @@
-package com.softserve.restapiexample.services;
+package com.softserve.restapiexample.app.controller.services;
 
-import com.softserve.restapiexample.Mapper.Mapper;
-import com.softserve.restapiexample.dto.RoleDTO;
-import com.softserve.restapiexample.exception.RoleNotFoundException;
-import com.softserve.restapiexample.model.Role;
-import com.softserve.restapiexample.repository.RoleRepository;
+import com.softserve.restapiexample.app.controller.dto.RoleDTO;
+import com.softserve.restapiexample.app.controller.exception.RoleNotFoundException;
+import com.softserve.restapiexample.app.controller.model.Role;
+import com.softserve.restapiexample.app.controller.repository.RoleRepository;
+import com.softserve.restapiexample.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
 public class RoleServiceImpl implements RoleService {
   @Autowired private RoleRepository roleRepository;
 
@@ -62,14 +62,16 @@ public class RoleServiceImpl implements RoleService {
 
   public RoleDTO getRoleByUserId(Long id) {
 
-    RoleDTO role = mapper.mapRoleToDTO(roleRepository.findById(id).orElse(null));
+    RoleDTO roleDTO =
+        roleRepository.findById(id).map(role -> mapper.mapRoleToDTO(role)).orElse(null);
 
-    if (role == null) {
+    if (roleDTO != null) {
 
-      throw new RoleNotFoundException("NO ROLE PRESENT WITH ID =" + id);
+      return roleDTO;
+
     } else {
 
-      return role;
+      throw new RoleNotFoundException("NO ROLE PRESENT WITH ID =" + id);
     }
   }
 }

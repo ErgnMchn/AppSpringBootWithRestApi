@@ -1,11 +1,10 @@
-package com.softserve.restapiexample.services;
+package com.softserve.restapiexample.app.controller.services;
 
-import com.softserve.restapiexample.dto.ArticleDTO;
-import com.softserve.restapiexample.model.Article;
+import com.softserve.restapiexample.app.controller.dto.ArticleDTO;
+import com.softserve.restapiexample.app.controller.model.Article;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
 public interface ArticleService {
     List<ArticleDTO> findAllArticles();
     void deleteArticleById(long id);

@@ -1,14 +1,16 @@
-package com.softserve.restapiexample.services;
+package com.softserve.restapiexample.app.controller.services;
 
-import com.softserve.restapiexample.Mapper.Mapper;
-import com.softserve.restapiexample.dto.CommentDTO;
-import com.softserve.restapiexample.exception.CommentNotFoundException;
-import com.softserve.restapiexample.model.Comment;
-import com.softserve.restapiexample.repository.CommentRepository;
+import com.softserve.restapiexample.app.controller.dto.CommentDTO;
+import com.softserve.restapiexample.app.controller.exception.CommentNotFoundException;
+import com.softserve.restapiexample.app.controller.model.Comment;
+import com.softserve.restapiexample.app.controller.repository.CommentRepository;
+import com.softserve.restapiexample.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class CommentServiceImpl implements CommentService {
   @Autowired private CommentRepository commentRepository;
 
@@ -46,13 +48,13 @@ public class CommentServiceImpl implements CommentService {
 
   public CommentDTO getCommentById(Long id) {
 
-    CommentDTO comment = mapper.mapCommentToDTO(commentRepository.findById(id).orElse(null));
+    CommentDTO commentDTO =
+        commentRepository.findById(id).map(comment -> mapper.mapCommentToDTO(comment)).orElse(null);
 
-    if (comment == null) {
-      throw new CommentNotFoundException("NO COMMENT PRESENT WITH ID =" + id);
+    if (commentDTO != null) {
+      return commentDTO;
     } else {
-
-      return comment;
+      throw new CommentNotFoundException("NO COMMENT PRESENT WITH ID =" + id);
     }
   }
 

@@ -1,14 +1,17 @@
-package com.softserve.restapiexample.services;
+package com.softserve.restapiexample.app.controller.services;
 
-import com.softserve.restapiexample.Mapper.Mapper;
-import com.softserve.restapiexample.dto.ArticleDTO;
-import com.softserve.restapiexample.exception.ArticleNotFoundException;
-import com.softserve.restapiexample.model.Article;
-import com.softserve.restapiexample.repository.ArticleRepository;
+import com.softserve.restapiexample.app.controller.exception.UserNotFoundException;
+import com.softserve.restapiexample.app.controller.dto.ArticleDTO;
+import com.softserve.restapiexample.app.controller.exception.ArticleNotFoundException;
+import com.softserve.restapiexample.app.controller.model.Article;
+import com.softserve.restapiexample.app.controller.repository.ArticleRepository;
+import com.softserve.restapiexample.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ArticleServiceImpl implements ArticleService {
 
   @Autowired private ArticleRepository articleRepository;
@@ -60,12 +63,13 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   public ArticleDTO getArticleById(Long id) {
-    ArticleDTO article = mapper.mapArticleToDTO(articleRepository.findById(id).orElse(null));
+    ArticleDTO articleDTO =
+        articleRepository.findById(id).map(article -> mapper.mapArticleToDTO(article)).orElse(null);
 
-    if (article == null) {
-      throw new ArticleNotFoundException("NO ARTICLE PRESENT WITH ID =" + id);
+    if (articleDTO != null) {
+      return articleDTO;
     } else {
-      return article;
+      throw new UserNotFoundException("NO USER PRESENT WITH ID =" + id);
     }
   }
 }
