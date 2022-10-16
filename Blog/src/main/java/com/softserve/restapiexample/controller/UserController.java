@@ -6,7 +6,7 @@ import com.softserve.restapiexample.exception.FieldErrorMessage;
 import com.softserve.restapiexample.exception.UserAlreadyExistException;
 import com.softserve.restapiexample.exception.UserNotFoundException;
 import com.softserve.restapiexample.model.User;
-import com.softserve.restapiexample.services.UserService;
+import com.softserve.restapiexample.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
   @Autowired private UserService userService;
 

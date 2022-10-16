@@ -4,14 +4,14 @@ import com.softserve.restapiexample.dto.CommentDTO;
 import com.softserve.restapiexample.exception.CommentNotFoundException;
 import com.softserve.restapiexample.exception.ErrorResponse;
 import com.softserve.restapiexample.model.Comment;
-import com.softserve.restapiexample.services.CommentService;
+import com.softserve.restapiexample.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/api/v1/comment")
 public class CommentController {
   @Autowired private CommentService commentService;
 
